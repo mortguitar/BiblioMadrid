@@ -1,22 +1,15 @@
-package com.mortega.servidor;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.List;
-
-/**
- * Controlador para las opiniones
- * Contendrá todos los métodos que realicen operaciones sobre opiniones de los usuarios
- *
- * @author Santiago Faci
- * @version curso 2015-2016
- */
 @RestController
-public class Controller {
+public class OpinionController {
 
     @Autowired
     private OpinionRepository repository;
@@ -26,9 +19,9 @@ public class Controller {
      * @return
      */
     @RequestMapping("/opiniones")
-    public List<Opiniones> getOpiniones() {
+    public List<Opinion> getOpiniones() {
 
-        List<Opiniones> listaOpiniones = repository.findAll();
+        List<Opinion> listaOpiniones = repository.findAll();
         return listaOpiniones;
     }
 
@@ -38,9 +31,9 @@ public class Controller {
      * @return
      */
     @RequestMapping("/opiniones_puntuacion")
-    public List<Opiniones> getOpiniones(int puntuacion) {
+    public List<Opinion> getOpiniones(int puntuacion) {
 
-        List<Opiniones> listaOpiniones = repository.findByPuntuacion(puntuacion);
+        List<Opinion> listaOpiniones = repository.findByPuntuacion(puntuacion);
         return listaOpiniones;
     }
 
@@ -52,10 +45,10 @@ public class Controller {
      */
     @RequestMapping("/add_opinion")
     public void addOpinion(@RequestParam(value = "titulo", defaultValue = "nada") String titulo,
-                           @RequestParam(value = "texto" , defaultValue = "nada mas") String texto,
+                           @RequestParam(value = "texto" , defaultValue = "nulo") String texto,
                            @RequestParam(value = "puntuacion", defaultValue = "-1") int puntuacion) {
 
-        Opiniones opinion = new Opiniones();
+        Opinion opinion = new Opinion();
         opinion.setTitulo(titulo);
         opinion.setTexto(texto);
         opinion.setFecha(new Date(System.currentTimeMillis()));

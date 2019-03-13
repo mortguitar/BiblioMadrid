@@ -22,10 +22,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class OpinionActivity extends AppCompatActivity implements View.OnClickListener {
+public class OpinionActivity extends AppCompatActivity {
 
     private ArrayList<Opinion> listaOpiniones = new ArrayList<>();
-    private final String URL_SERVIDOR = "http://192.168.0.5:8082";
+    private final String URL_SERVIDOR = "http://10.0.2.2:8082";
 
     private EditText opinionText;
     private TextView nombreBiblioteca;
@@ -63,36 +63,6 @@ public class OpinionActivity extends AppCompatActivity implements View.OnClickLi
                 onBackPressed();
             }
         });
-
-        CargarDatos cargarDatos = new CargarDatos();
-        cargarDatos.execute();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-
-            case R.id.enviarB:
-
-
-                break;
-        }
-    }
-
-    class CargarDatos extends AsyncTask<String, Integer, Void> {
-
-        @SuppressLint("WrongThread")
-        @Override
-        protected Void doInBackground(String... strings) {
-
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-            Opinion[] opinionesArray = restTemplate.getForObject(URL_SERVIDOR + "/opiniones", Opinion[].class);
-            listaOpiniones.addAll(Arrays.asList(opinionesArray));
-
-            return null;
-        }
     }
 
     class SubirDatos extends AsyncTask<String, Integer, Void> {
